@@ -1,0 +1,7 @@
+apply plugin: 'application'
+
+mainClassName = "${group}.pixiv.Main"
+
+dependencies {
+    compile project(":Client")
+}
