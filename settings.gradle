@@ -2,4 +2,3 @@ rootProject.name = 'pixiv'
 
 include 'Pixiv'
 include 'Client'
-include 'Resources'

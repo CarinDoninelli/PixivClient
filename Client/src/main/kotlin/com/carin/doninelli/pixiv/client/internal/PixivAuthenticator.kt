@@ -27,6 +27,6 @@ internal class PixivAuthenticator(private val mapper: ObjectMapper, private val 
         }
 
         val response = client.execute(post)
-        return mapper.readValue(str)
+        return mapper.readValue(response.entity.content) // TODO: extract from response field
     }
 }

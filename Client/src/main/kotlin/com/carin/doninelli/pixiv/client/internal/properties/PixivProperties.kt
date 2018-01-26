@@ -1,12 +1,23 @@
 package com.carin.doninelli.pixiv.client.internal.properties
 
-internal object PixivProperties {
-    const val referrer = "http://www.pixiv.net/"
-    const val userAgent = "PixivIOSApp/6.4.0"
-    const val contentType = "application/x-www-form-urlencoded"
+import java.util.Properties
 
-    const val clientId = "bYGKuGVw91e0NMfPGp44euvGt59s"
-    const val clientSecret = "HP3RmkgAmEGro0gn1x9ioawQE8WMfvLXDz3ZqxpK"
-    const val getSecureUrl = "1"
-    const val grantType = "password"
+internal object PixivProperties {
+    private val pixivPropertiesFile = "pixiv.properties"
+
+    private val properties: Properties by lazy {
+        Properties().also { properties ->
+            javaClass.classLoader
+                    .getResourceAsStream(pixivPropertiesFile)
+                    .use(properties::load)
+        }
+    }
+
+    val referrer: String by lazy { properties.getProperty("referrer") }
+    val userAgent: String by lazy { properties.getProperty("userAgent") }
+    val contentType: String by lazy { properties.getProperty("contentType") }
+    val clientId: String by lazy { properties.getProperty("clientId") }
+    val clientSecret: String by lazy { properties.getProperty("clientSecret") }
+    val getSecureUrl: String by lazy { properties.getProperty("getSecureUrl") ?: "1" }
+    val grantType: String by lazy { properties.getProperty("grantType") ?: "password" }
 }
