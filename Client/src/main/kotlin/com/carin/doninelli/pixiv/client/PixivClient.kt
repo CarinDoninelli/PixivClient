@@ -1,5 +1,8 @@
 package com.carin.doninelli.pixiv.client
 
-interface PixivClient {
+import com.carin.doninelli.pixiv.client.entities.UserProfile
+import java.util.concurrent.CompletableFuture
 
+interface PixivClient {
+    fun getUserInfo(id: Int): CompletableFuture<UserProfile>
 }

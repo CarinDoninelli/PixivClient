@@ -2,7 +2,9 @@ package com.carin.doninelli.pixiv.client.entities
 
 import java.io.Serializable
 
-data class Credentials(
+sealed class Credentials : Serializable
+
+data class PasswordCredentials(
         val username: String,
         val password: String
-) : Serializable
+) : Credentials(), Serializable

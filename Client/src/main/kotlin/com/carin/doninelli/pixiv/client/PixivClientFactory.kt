@@ -1,20 +1,18 @@
 package com.carin.doninelli.pixiv.client
 
 import com.carin.doninelli.pixiv.client.entities.Credentials
-import com.carin.doninelli.pixiv.client.internal.PixivAuthenticator
 import com.carin.doninelli.pixiv.client.internal.PixivClientImpl
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.PropertyNamingStrategy
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.carin.doninelli.pixiv.client.internal.http.HttpClientFactory
+import com.carin.doninelli.pixiv.client.internal.mappers.ObjectMapperFactory
 
 class PixivClientFactory {
-    fun createPixivClient(credentials: Credentials): PixivClient {
-        val mapper = jacksonObjectMapper().apply {
-            propertyNamingStrategy = PropertyNamingStrategy.SNAKE_CASE
-            configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        }
+    private val objectMapperFactory = ObjectMapperFactory()
+    private val clientFactory = HttpClientFactory()
 
-        val pixivAuthenticator = PixivAuthenticator(mapper)
-        return PixivClientImpl(mapper, credentials, pixivAuthenticator)
+    fun createPixivClient(credentials: Credentials): PixivClient {
+        val mapper = objectMapperFactory.createPixivObjectMapper()
+        val client = clientFactory.createHttpClient()
+
+        return PixivClientImpl(mapper, client, credentials)
     }
 }
